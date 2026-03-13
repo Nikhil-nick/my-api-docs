@@ -136,7 +136,8 @@
           },
           "age": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "example": 10
           }
         }
       }
