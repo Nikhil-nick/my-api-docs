@@ -1,19 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>API Documentation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <!-- Swagger UI CSS -->
   <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
-  <style>
-    html, body { height: 100%; margin: 0; background: #fff; }
-    #swagger-ui { max-width: 100%; box-sizing: border-box; padding-top: 8px; }
-    @media (prefers-color-scheme: dark) {
-      body { background: #0b0c10; }
-    }
-  </style>
 </head>
+
 <body>
   <div id="swagger-ui"></div>
 
@@ -22,28 +18,16 @@
   <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
 
   <script>
-    window.onload = () => {
-      const ui = SwaggerUIBundle({
-        // Your spec file in the SAME folder as index.html
-        url: "api_doc.json",
-
+    window.onload = function () {
+      SwaggerUIBundle({
+        url: "api_doc.json",   // your file name
         dom_id: "#swagger-ui",
-        deepLinking: true,
-        layout: "BaseLayout",
-        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-
-        // Useful settings
-        tryItOutEnabled: true,
-        filter: true,
-        displayRequestDuration: true,
-        docExpansion: "none",
-        defaultModelExpandDepth: 1,
-        defaultModelsExpandDepth: 1,
-        showExtensions: true,
-        showCommonExtensions: true
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
       });
-
-      window.ui = ui;
     };
   </script>
 </body>
