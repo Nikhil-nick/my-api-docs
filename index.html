@@ -6,74 +6,43 @@
   <title>API Documentation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Swagger UI CSS -->
-  https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css
-  <style>
-    body {
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    /* Auto Dark Mode (system preference) */
-    @media (prefers-color-scheme: dark) {
-      body:not(.light-mode) {
-        background: #0d1117;
-        color: #c9d1d9;
-      }
-      body:not(.light-mode) .swagger-ui {
-        filter: invert(1) hue-rotate(180deg);
-      }
-      body:not(.light-mode) img {
-        filter: invert(1) hue-rotate(180deg);
-      }
-    }
-
-    /* Manual Dark Mode (toggle button) */
-    body.dark-mode {
-      background: #0d1117 !important;
-      color: #c9d1d9 !important;
-    }
-    body.dark-mode .swagger-ui {
-      filter: invert(1) hue-rotate(180deg);
-    }
-    body.dark-mode img {
-      filter: invert(1) hue-rotate(180deg);
-    }
-
-    /* Toggle Button */
-    #theme-toggle {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      z-index: 9999;
-      padding: 6px 12px;
-      background: #1f6feb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-    #theme-toggle:hover {
-      opacity: 0.85;
-    }
-  </style>
+  <!-- Swagger UI CSS (primary) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css" />
+  <!-- Fallback CSS if primary fails -->
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" onerror="this.remove()" />
 </head>
 
 <body>
-  <!-- Toggle button -->
-  <button id="theme-toggle">Toggle Theme</button>
-
-  <!-- Swagger container -->
   <div id="swagger-ui"></div>
 
-  <!-- Swagger UI JS -->
-  https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js</script>
-  https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js</script>
+  <!-- Swagger UI JS (primary) -->
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+
+  <!-- Fallback to unpkg if primary fails -->
+  <script>
+    (function ensureSwaggerLoaded() {
+      if (window.SwaggerUIBundle) return;
+      var s1 = document.createElement('script');
+      s1.src = 'https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js';
+      var s2 = document.createElement('script');
+      s2.src = 'https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js';
+      document.body.appendChild(s1);
+      document.body.appendChild(s2);
+    })();
+  </script>
 
   <script>
-    // Initialize Swagger UI
-    window.onload = () => {
+    window.addEventListener('load', function () {
+      if (!window.SwaggerUIBundle) {
+        console.error('SwaggerUIBundle still not available — CDN blocked?');
+        const msg = document.createElement('pre');
+        msg.style.color = 'crimson';
+        msg.textContent = 'Failed to load Swagger UI scripts from CDNs. If you are behind a firewall, use Fix 3 below (serve local files).';
+        document.body.prepend(msg);
+        return;
+      }
+
       SwaggerUIBundle({
         url: "api_doc.json",
         dom_id: "#swagger-ui",
@@ -84,31 +53,7 @@
         layout: "BaseLayout",
         deepLinking: true
       });
-    };
-
-    // Manual Theme Toggle Logic
-    const toggle = document.getElementById('theme-toggle');
-    toggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      document.body.classList.toggle('light-mode');
-
-      // Save preference
-      if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-      } else if (document.body.classList.contains('light-mode')) {
-        localStorage.setItem('theme', 'light');
-      } else {
-        localStorage.removeItem('theme'); // follow system preference
-      }
     });
-
-    // Load saved preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-mode');
-    } else if (savedTheme === 'light') {
-      document.body.classList.add('light-mode');
-    }
   </script>
 </body>
 </html>
