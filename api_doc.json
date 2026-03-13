@@ -1,341 +1,145 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.1.0",
   "info": {
-    "title": "Compliance",
-    "description": "## Authentication\n\nBasic Authentication is required for all requests.",
-    "version": "1"
+    "title": "OpenAPI definition",
+    "version": "v0"
   },
-  "basePath": "/WPMA_Compliance_API/rest/Compliance",
-  "schemes": [
-    "https"
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
   ],
   "paths": {
-    "/Submit": {
-      "post": {
+    "/users": {
+      "get": {
         "tags": [
-          "Compliance"
+          "test-controller"
         ],
-        "description": "",
-        "operationId": "Submit",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "ComplianceRequest",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ComplianceSubmitRequest"
-            }
-          }
-        ],
+        "operationId": "getUser",
         "responses": {
           "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/Response"
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "test-controller"
+        ],
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "test-controller"
+        ],
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "test-controller"
+        ],
+        "operationId": "deleteUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/hello": {
+      "get": {
+        "tags": [
+          "test-controller"
+        ],
+        "operationId": "hello",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "definitions": {
-    "Address": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "address1": {
-          "type": "string",
-          "default": ""
-        },
-        "address2": {
-          "type": "string",
-          "default": ""
-        },
-        "address3": {
-          "type": "string",
-          "default": ""
-        },
-        "postalCode": {
-          "type": "string",
-          "default": ""
-        },
-        "city": {
-          "type": "string",
-          "default": ""
-        },
-        "state": {
-          "type": "string",
-          "default": ""
-        },
-        "countryCode": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "BankDetails2": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "sortCode": {
-          "type": "string",
-          "default": ""
-        },
-        "accountNumber": {
-          "type": "string",
-          "default": ""
-        },
-        "bankName": {
-          "type": "string",
-          "default": ""
-        },
-        "bankAccountName": {
-          "type": "string",
-          "default": ""
-        },
-        "accountType": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "CompanyDetail2": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "legalName": {
-          "type": "string",
-          "default": ""
-        },
-        "tradingName": {
-          "type": "string",
-          "default": ""
-        },
-        "tradingAddress": {
-          "$ref": "#/definitions/Address"
-        },
-        "legalAddress": {
-          "$ref": "#/definitions/Address"
-        },
-        "website": {
-          "type": "string",
-          "default": ""
-        },
-        "companyType": {
-          "type": "string",
-          "default": ""
-        },
-        "registrationNumber": {
-          "type": "string",
-          "default": ""
-        },
-        "mcc": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "ComplianceSubmitRequest": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "verificationType": {
-          "type": "string",
-          "default": ""
-        },
-        "sourceSystem": {
-          "type": "string",
-          "default": ""
-        },
-        "primaryParty": {
-          "type": "string",
-          "default": ""
-        },
-        "decisioningCriteria": {
-          "type": "string",
-          "default": ""
-        },
-        "salesReference": {
-          "type": "string",
-          "default": ""
-        },
-        "webhookURL": {
-          "type": "string",
-          "default": ""
-        },
-        "companyDetail": {
-          "$ref": "#/definitions/CompanyDetail2"
-        },
-        "owners": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/OwnerItem3"
-          }
-        },
-        "mainBusinessRepresentative": {
-          "$ref": "#/definitions/MainBusinessRepresentative3"
-        },
-        "technicalContact": {
-          "$ref": "#/definitions/TechnicalContact"
-        },
-        "bankDetail": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BankDetails2"
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       }
-    },
-    "MainBusinessRepresentative3": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "name": {
-          "$ref": "#/definitions/Name"
-        },
-        "phone": {
-          "type": "string",
-          "default": ""
-        },
-        "email": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "Name": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "firstName": {
-          "type": "string",
-          "default": ""
-        },
-        "middleName": {
-          "type": "string",
-          "default": ""
-        },
-        "lastName": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "OwnerItem3": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "dayOfBirth": {
-          "type": "integer",
-          "example": 31,
-          "format": "int64"
-        },
-        "monthOfBirth": {
-          "type": "integer",
-          "example": 12,
-          "format": "int64"
-        },
-        "yearOfBirth": {
-          "type": "integer",
-          "example": 2026,
-          "format": "int64"
-        },
-        "ownershipPercentage": {
-          "type": "number",
-          "example": 0.1
-        },
-        "homeAddress": {
-          "$ref": "#/definitions/Address"
-        },
-        "name": {
-          "$ref": "#/definitions/Name"
-        },
-        "phone": {
-          "type": "string",
-          "default": ""
-        },
-        "countryCode": {
-          "type": "string",
-          "default": ""
-        },
-        "email": {
-          "type": "string",
-          "default": ""
-        },
-        "position": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "Response": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "requestReferenceId": {
-          "type": "string",
-          "default": ""
-        },
-        "requestStatus": {
-          "type": "string",
-          "default": ""
-        },
-        "uniqueIndentifier": {
-          "type": "string",
-          "default": ""
-        },
-        "webhookURL": {
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
-    "TechnicalContact": {
-      "description": "",
-      "type": "object",
-      "properties": {
-        "name": {
-          "$ref": "#/definitions/Name"
-        },
-        "phone": {
-          "type": "string",
-          "default": ""
-        },
-        "email": {
-          "type": "string",
-          "default": ""
-        },
-        "PrimaryPartyID": {
-          "type": "string",
-          "default": ""
-        }
-      }
     }
-  },
-  "securityDefinitions": {
-    "basic": {
-      "type": "basic"
-    }
-  },
-  "security": [
-    {
-      "basic": []
-    }
-  ],
-  "tags": [
-    {
-      "name": "Compliance"
-    }
-  ]
+  }
 }
