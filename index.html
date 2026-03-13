@@ -6,19 +6,43 @@
   <title>API Documentation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Swagger UI CSS -->
-  https://unpkg.com/swagger-ui-dist@5/swagger-ui.css
+  <!-- Swagger UI CSS (primary) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css" />
+  <!-- Fallback CSS if primary fails -->
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" onerror="this.remove()" />
 </head>
 
 <body>
   <div id="swagger-ui"></div>
 
-  <!-- Swagger UI JS -->
-  https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js</script>
-  https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js</script>
+  <!-- Swagger UI JS (primary) -->
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+
+  <!-- Fallback to unpkg if primary fails -->
+  <script>
+    (function ensureSwaggerLoaded() {
+      if (window.SwaggerUIBundle) return;
+      var s1 = document.createElement('script');
+      s1.src = 'https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js';
+      var s2 = document.createElement('script');
+      s2.src = 'https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js';
+      document.body.appendChild(s1);
+      document.body.appendChild(s2);
+    })();
+  </script>
 
   <script>
-    window.onload = () => {
+    window.addEventListener('load', function () {
+      if (!window.SwaggerUIBundle) {
+        console.error('SwaggerUIBundle still not available — CDN blocked?');
+        const msg = document.createElement('pre');
+        msg.style.color = 'crimson';
+        msg.textContent = 'Failed to load Swagger UI scripts from CDNs. If you are behind a firewall, use Fix 3 below (serve local files).';
+        document.body.prepend(msg);
+        return;
+      }
+
       SwaggerUIBundle({
         url: "api_doc.json",
         dom_id: "#swagger-ui",
@@ -26,9 +50,10 @@
           SwaggerUIBundle.presets.apis,
           SwaggerUIStandalonePreset
         ],
-        layout: "BaseLayout"
+        layout: "BaseLayout",
+        deepLinking: true
       });
-    };
+    });
   </script>
 </body>
 </html>
