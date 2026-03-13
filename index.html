@@ -7,10 +7,8 @@
   <!-- Swagger UI CSS -->
   <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
   <style>
-    /* Optional: page fill and a small top padding */
     html, body { height: 100%; margin: 0; background: #fff; }
     #swagger-ui { max-width: 100%; box-sizing: border-box; padding-top: 8px; }
-    /* Optional dark mode (auto) */
     @media (prefers-color-scheme: dark) {
       body { background: #0b0c10; }
     }
@@ -26,37 +24,25 @@
   <script>
     window.onload = () => {
       const ui = SwaggerUIBundle({
-        // If api.json is in the same folder, this relative path works:
+        // Your spec file in the SAME folder as index.html
         url: "api_doc.json",
-        // If your spec is elsewhere, use an absolute URL:
-        // url: "https://raw.githubusercontent.com/<user>/<repo>/main/path/to/api.json",
 
         dom_id: "#swagger-ui",
         deepLinking: true,
-        layout: "BaseLayout", // Alternatives: "StandaloneLayout"
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset
-        ],
-        // Enable/disable features as needed:
+        layout: "BaseLayout",
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+
+        // Useful settings
         tryItOutEnabled: true,
-        filter: true,              // enables the search box
+        filter: true,
         displayRequestDuration: true,
-        docExpansion: "none",      // "none" | "list" | "full"
+        docExpansion: "none",
         defaultModelExpandDepth: 1,
         defaultModelsExpandDepth: 1,
         showExtensions: true,
-        showCommonExtensions: true,
-
-        // If you use OAuth flows in your OpenAPI:
-        // oauth2RedirectUrl: window.location.origin + window.location.pathname.replace(/\/$/, '') + "/oauth2-redirect.html",
+        showCommonExtensions: true
       });
 
-      // Optional: OAuth init if using OAuth2 in your API
-      // ui.initOAuth({
-      //   clientId: "your-client-id",
-      //   scopes: ["read", "write"]
-      // });
       window.ui = ui;
     };
   </script>
